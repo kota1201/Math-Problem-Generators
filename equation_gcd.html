@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>˜A—§•û’ö®ì¬</title>
+<title>é€£ç«‹æ–¹ç¨‹å¼ä½œæˆ</title>
 
 <style type="text/css">
 <!--
@@ -10,6 +10,16 @@
 
 <script type="text/javascript">
 <!--
+function nonzerorandom(absolutemax){
+	//çµ¶å¯¾å€¤ã‚’æŒ‡å®šã—ã¦ã€ãã®ç¯„å›²å†…ã®ä¹±æ•°ã‚’ç”Ÿæˆã™ã‚‹ã€‚
+	//ãŸã ã—ã€0ã¯å«ã¾ãªã„
+	var randomnumber=Math.floor(Math.random()*absolutemax*2)+1;
+	if (randomnumber  > absolutemax){
+	randomnumber = randomnumber - absolutemax*2 -1;
+	}
+	return randomnumber;
+}
+
 function eucmod(syaro,rize){
 	if (syaro > rize){
 	var temp = syaro;
@@ -34,11 +44,9 @@ function gcd(chino,cocoa){
 	}
 
 	while (cocoa % chino >= 2){
-	console.log("x=" + chino + ",y=" + cocoa);
 	rabbithouse = eucmod(chino,cocoa);
 	chino = rabbithouse[0];
 	cocoa = rabbithouse[1];
-	console.log("ğŒ" + cocoa % chino);
 	}
 
 	if (cocoa % chino == 1){
@@ -46,7 +54,38 @@ function gcd(chino,cocoa){
 	}
 
 	return chino;
-
+
+}
+
+function addsign(coeff,variable,plus,equal){
+	// xã‚„yã®ä¿‚æ•°ã«ã‚ˆã£ã¦Â±ã‚„=ã‚’ä»˜ã‘ã‚‹
+	// plus=1ãªã‚‰-ã ã‘ã§ãªã+ã‚‚ä»˜ã‘ã‚‹ã€‚ ä¾‹:addsign(3,y,1,0) = "+3y"
+	// equal=1ãªã‚‰æœ€å¾Œã«=ã‚’ä»˜ã‘ã‚‹ã€‚ ä¾‹:addsign(3,y,1,1) = "+3y="
+	
+	if (coeff < -1){
+		variable = coeff + variable;
+	}else if (coeff == -1){
+		variable = "-" + variable;
+	}else if (coeff == 0){
+		variable = "";
+	}else if (coeff == 1){
+		if (plus == 1){
+		variable = "+" + variable;
+		}else{
+		variable = variable;
+		}
+	}else{
+		if (plus == 1){
+		variable = "+" + coeff + variable;
+		}else{
+		variable = coeff + variable;
+		}
+	}
+
+	if (equal == 1){
+		variable = variable + "="
+	}
+	return variable;
 }
 
 var xy = "";
@@ -54,7 +93,7 @@ var tex = "";
 
 function equations(){
 
-	// İ’èŠJn
+	// è¨­å®šé–‹å§‹
 
 	var x=Math.floor(Math.random()*19)-9;
 	var y=Math.floor(Math.random()*19)-9;
@@ -62,20 +101,8 @@ function equations(){
 	xy = xy + "$$\\left\\{\\begin{array}{l}" + "\n" + "x=" + x + "\\\\" + "\n" + "y=" + y + "\n" + "\\end{array}\\right.$$\n\n"
 	document.form1.field_xy.value = xy;
 
-	var a2=Math.floor(Math.random()*18)+1;
-	if (a2 < 10){
-	var a=a2;
-	}else{
-	var a=a2-19;
-	}
-
-	var b2=Math.floor(Math.random()*18)+1;
-	if (b2 < 10){
-	var b=b2;
-	}else{
-	var b=b2-19;
-	}
-	console.log("a=" + a + ",b=" + b);
+	var a = nonzerorandom(9);
+	var b = nonzerorandom(9);
 
 	if (gcd(a,b)>1){
 	var gcd1 = gcd(a,b);
@@ -83,20 +110,8 @@ function equations(){
 	b = b / gcd1;
 	}
 
-	var c2=Math.floor(Math.random()*18)+1;
-	if (c2 < 10){
-	var c=c2;
-	}else{
-	var c=c2-19;
-	}
-
-	var d2=Math.floor(Math.random()*18)+1;
-	if (d2 < 10){
-	var d=d2;
-	}else{
-	var d=d2-19;
-	}
-	console.log("c=" + c + ",d=" + d);
+	var c = nonzerorandom(9);
+	var d = nonzerorandom(9);
 
 	if (gcd(c,d)>1){
 	var gcd2 = gcd(c,d);
@@ -104,71 +119,25 @@ function equations(){
 	d = d / gcd2;
 	}
 
-	// ¤•i1
+
 	var solution1 = a * x + b * y;
 
-	// ¤•i2
 	var solution2 = c * x + d * y;
 
-	if (a < -1){
-		var a1 = a + "x";
-	}
-	else if (a == -1){
-		var a1 = "-x";
-	}
-	else if (a == 1){
-		var a1 = "x";
-	}
-	else{
-		var a1 = a + "x";
-	}
-
-	if (b < -1){
-		var b1 = b + "y=";
-	}
-	else if (b == -1){
-		var b1 = "-y=";
-	}
-	else if (b == 1){
-		var b1 = "+y=";
-	}
-	else{
-		var b1 = "+" + b + "y=";
-	}
-
-	if (c < -1){
-		var c1 = c + "x";
-	}
-	else if (c == -1){
-		var c1 = "-x";
-	}
-	else if (c == 1){
-		var c1 = "x";
-	}
-	else{
-		var c1 = c + "x";
-	}
-
-	if (d < -1){
-		var d1 = d + "y=";
-	}
-	else if (d == -1){
-		var d1 = "-y=";
-	}
-	else if (d == 1){
-		var d1 = "+y=";
-	}
-	else{
-		var d1 = "+" + d + "y=";
-	}
+	var ax = addsign(a,"x",0,0)
+	var by = addsign(b,"y",1,1)
+	var cx = addsign(c,"x",0,0)
+	var dy = addsign(d,"y",1,1)
 
 
-	tex = tex + "$$\\left\\{\\begin{array}{l}" + "\n" + a1 + b1 + solution1 + "\\\\" + "\n" + c1 + d1 + solution2 + "\n" + "\\end{array}\\right.$$\n\n"
-	document.form1.field_tex.value = tex;
+	tex = tex + "$$\\left\\{\\begin{array}{l}" + "\n" + ax + by + solution1 + "\\\\" + "\n" + cx + dy + solution2 + "\n" + "\\end{array}\\right.$$\n\n"
+	document.form1.field_tex.value = tex;
 }
 
 function equationsproblem(){
-	for (var i = 0; i < 5; i++){
+	xy = "";
+	tex = "";
+	for (var i = 0; i < document.form1.howmany.value; i++){
 	equations();
 	}
 }
@@ -179,15 +148,17 @@ function equationsproblem(){
 </head>
 <body>
 
-<form action="#" name="form1">
-<input type="button" value="ƒ‰ƒ“ƒ_ƒ€‚È˜A—§•û’ö®‚ğì‚é" onclick="equationsproblem()">
-<br>
+<form action="#" name="form1">
+ä½œæˆã™ã‚‹é€£ç«‹æ–¹ç¨‹å¼ã®æ•°ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚<br>
+<input type="number" name="howmany">
+<input type="button" value="ãƒ©ãƒ³ãƒ€ãƒ ãªé€£ç«‹æ–¹ç¨‹å¼ã‚’ä½œã‚‹" onclick="equationsproblem()">
+<br><br>
 
 <textarea name="field_xy" rows="30" cols="40">
-‚±‚±‚ÉTeX•¶‘‚ª•\¦‚³‚ê‚Ü‚·B</textarea>
+ã“ã“ã«TeXæ–‡æ›¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚</textarea>
 
 <textarea name="field_tex" rows="30" cols="40">
-‚±‚±‚ÉTeX•¶‘‚ª•\¦‚³‚ê‚Ü‚·B
+ã“ã“ã«TeXæ–‡æ›¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚
 </textarea>
 
 
