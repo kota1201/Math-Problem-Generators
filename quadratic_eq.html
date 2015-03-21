@@ -1,0 +1,130 @@
+<html>
+<head>
+<title>二次方程式ランダム作成</title>
+
+<style type="text/css">
+<!--
+
+-->
+</style>
+
+<script type="text/javascript">
+<!--
+function eucmod(syaro,rize){
+	if (syaro > rize){
+	var temp = syaro;
+	syaro = rize;
+	rize = temp;
+	}
+	return [rize % syaro,syaro];
+}
+	
+	
+
+function gcd(chino,cocoa){
+
+	chino = Math.abs(chino);
+	cocoa = Math.abs(cocoa);	
+	var rabbithouse = [0,0];
+
+	if (chino > cocoa){
+	var temp = chino;
+	chino = cocoa;
+	cocoa = temp;
+	}
+
+	while (cocoa % chino >= 2){
+	console.log("x=" + chino + ",y=" + cocoa);
+	rabbithouse = eucmod(chino,cocoa);
+	chino = rabbithouse[0];
+	cocoa = rabbithouse[1];
+	console.log("条件" + cocoa % chino);
+	}
+
+	if (cocoa % chino == 1){
+	chino = 1;
+	}
+
+	return chino;
+
+}
+
+function quadratic(){
+
+	// 設定開始
+
+	var a=Math.floor(Math.random()*18)+1;
+	if (a>9){
+	var a=a-19;
+	}
+
+	var b=Math.floor(Math.random()*18)+1;
+	if (b>9){
+	var b=b-19;
+	}
+
+	if (a == b){
+	var solution = "$$x=" + a + "$$";
+	document.form1.field_solution.value = solution;
+	}else {
+	var solution = "$$x=" + a + ", " + b + "$$";
+	document.form1.field_solution.value = solution;
+	}
+
+	var coefficient = - a - b;
+	if (coefficient < -1){
+		var coefficient = coefficient + "x";
+	}
+	else if (coefficient == -1){
+		coefficient = "-x";
+	}
+	else if (coefficient == 0){
+		coefficient = "";
+	}
+	else if (coefficient == 1){
+		coefficient = "+x";
+	}
+	else{
+		coefficient = "+" + coefficient + "x";
+	}
+
+	var constant = a * b;
+	if (constant < 0){
+		var constant = constant;
+	}
+	else if (constant == 0){
+		constant = "";
+	}
+	else{
+		constant = "+" + constant;
+	}
+
+
+	var problem = "$$x^2" + coefficient + constant + "=0$$"
+	document.form1.field_problem.value = problem;
+}
+
+// --> 
+</script> 
+
+</head>
+<body>
+
+<form action="#" name="form1">
+<input type="button" value="ランダムな二次方程式を作る" onclick="quadratic()">
+<br>
+
+<textarea name="field_solution" rows="6" cols="40">
+ここにTeX文書が表示されます。
+</textarea>
+<br><br>
+
+<strong></strong>
+<textarea name="field_problem" rows="6" cols="40">
+ここにTeX文書が表示されます。
+</textarea>
+
+</form>
+
+</body>
+</html>

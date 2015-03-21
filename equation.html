@@ -1,0 +1,141 @@
+<html>
+<head>
+<title>連立方程式作成</title>
+
+<style type="text/css">
+<!--
+
+-->
+</style>
+
+<script type="text/javascript">
+<!--
+var xy = ""
+var tex = ""
+
+function equations(){
+
+	// 設定開始
+
+	// 商品1
+	var solution1 = document.form1.a.value * document.form1.x.value + document.form1.b.value * document.form1.y.value;
+	document.form1.field1.value = solution1; // 小計を表示
+
+	// 商品2
+	var solution2 = document.form1.c.value * document.form1.x.value + document.form1.d.value * document.form1.y.value;
+	document.form1.field2.value = solution2; // 小計を表示
+
+	if (document.form1.a.value < -1){
+		var a1 = document.form1.a.value + "x";
+	}
+	else if (document.form1.a.value == -1){
+		var a1 = "-x";
+	}
+	else if (document.form1.a.value == 0){
+		var a1 = "";
+	}
+	else if (document.form1.a.value == 1){
+		var a1 = "x";
+	}
+	else{
+		var a1 = document.form1.a.value + "x";
+	}
+
+	if (document.form1.b.value < -1){
+		var b1 = document.form1.b.value + "y=";
+	}
+	else if (document.form1.b.value == -1){
+		var b1 = "-y=";
+	}
+	else if (document.form1.b.value == 0){
+		var b1 = "=";
+	}
+	else if (document.form1.b.value == 1){
+		var b1 = "+y=";
+	}
+	else{
+		var b1 = "+" + document.form1.b.value + "y=";
+	}
+
+	if (document.form1.c.value < -1){
+		var c1 = document.form1.c.value + "x";
+	}
+	else if (document.form1.c.value == -1){
+		var c1 = "-x";
+	}
+	else if (document.form1.c.value == 0){
+		var c1 = "";
+	}
+	else if (document.form1.c.value == 1){
+		var c1 = "x";
+	}
+	else{
+		var c1 = document.form1.c.value + "x";
+	}
+
+	if (document.form1.d.value < -1){
+		var d1 = document.form1.d.value + "y=";
+	}
+	else if (document.form1.d.value == -1){
+		var d1 = "-y=";
+	}
+	else if (document.form1.d.value == 0){
+		var d1 = "=";
+	}
+	else if (document.form1.d.value == 1){
+		var d1 = "+y=";
+	}
+	else{
+		var d1 = "+" + document.form1.d.value + "y=";
+	}
+
+	xy = xy + "$$\\left\\{\\begin{array}{l}" +  "\n" + "x=" + document.form1.x.value + "\\\\" + "\n" + "y=" + document.form1.y.value + "\n" + "\\end{array}\\right.$$\n"
+	document.form1.field_xy.value = xy;
+
+	tex = tex + "$$\\left\\{\\begin{array}{l}" + "\n" + a1 + b1 + document.form1.field1.value + "\\\\" + "\n" + c1 + d1 + document.form1.field2.value + "\n" + "\\end{array}\\right.$$\n"
+	document.form1.field_tex.value = tex;
+
+}
+
+function equationsproblem(){
+	for (var i = 0; i < 5; i++){
+	equations();
+	}
+}
+// --> 
+</script> 
+
+</head>
+<body>
+
+<form action="#" name="form1">
+
+x=<input type="number" name="x" onChange="keisan()"><br>
+y=<input type="number" name="y" onChange="keisan()">
+<br>
+
+<input type="number" name="a" onChange="keisan()">x+
+<input type="number" name="b" onChange="keisan()">y=
+<input type="number" name="field1" size="8" value="0">
+<br>
+
+<input type="number" name="c" onChange="keisan()">x+
+<input type="number" name="d" onChange="keisan()">y=
+<input type="number" name="field2" size="8" value="0">
+<br><br>
+
+
+<strong></strong>
+<textarea name="field_xy" rows="6" cols="60">
+ここにTeX文書が表示されます。
+</textarea>
+<br>
+
+<textarea name="field_tex" rows="6" cols="60">
+ここにTeX文書が表示されます。
+</textarea>
+
+</form>
+
+</body>
+</html>

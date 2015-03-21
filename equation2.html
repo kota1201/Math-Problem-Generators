@@ -1,0 +1,143 @@
+<html>
+<head>
+<title>連立方程式作成</title>
+
+<style type="text/css">
+<!--
+
+-->
+</style>
+
+<script type="text/javascript">
+<!--
+
+var xy = ""
+var tex = ""
+
+function equations(){
+
+	// 設定開始
+
+	var x=Math.floor(Math.random()*19)-9;
+	var y=Math.floor(Math.random()*19)-9;
+
+	xy = xy + "$$\\left\\{\\begin{array}{l}" + "\n" + "x=" + x + "\\\\" + "\n" + "y=" + y + "\n" + "\\end{array}\\right.$$\n\n"
+	document.form1.field_xy.value = xy;
+
+	var a2=Math.floor(Math.random()*18)+1;
+	if (a2 < 10){
+	var a=a2;
+	}else{
+	var a=a2-19;
+	}
+
+	var b2=Math.floor(Math.random()*18)+1;
+	if (b2 < 10){
+	var b=b2;
+	}else{
+	var b=b2-19;
+	}
+
+	var c2=Math.floor(Math.random()*18)+1;
+	if (c2 < 10){
+	var c=c2;
+	}else{
+	var c=c2-19;
+	}
+
+	var d2=Math.floor(Math.random()*18)+1;
+	if (d2 < 10){
+	var d=d2;
+	}else{
+	var d=d2-19;
+	}
+
+	// 商品1
+	var solution1 = a * x + b * y;
+
+	// 商品2
+	var solution2 = c * x + d * y;
+
+	if (a < -1){
+		var a1 = a + "x";
+	}
+	else if (a == -1){
+		var a1 = "-x";
+	}
+	else if (a == 1){
+		var a1 = "x";
+	}
+	else{
+		var a1 = a + "x";
+	}
+
+	if (b < -1){
+		var b1 = b + "y=";
+	}
+	else if (b == -1){
+		var b1 = "-y=";
+	}
+	else if (b == 1){
+		var b1 = "+y=";
+	}
+	else{
+		var b1 = "+" + b + "y=";
+	}
+
+	if (c < -1){
+		var c1 = c + "x";
+	}
+	else if (c == -1){
+		var c1 = "-x";
+	}
+	else if (c == 1){
+		var c1 = "x";
+	}
+	else{
+		var c1 = c + "x";
+	}
+
+	if (d < -1){
+		var d1 = d + "y=";
+	}
+	else if (d == -1){
+		var d1 = "-y=";
+	}
+	else if (d == 1){
+		var d1 = "+y=";
+	}
+	else{
+		var d1 = "+" + d + "y=";
+	}
+
+
+	tex = tex + "$$\\left\\{\\begin{array}{l}" + "\n" + a1 + b1 + solution1 + "\\\\" + "\n" + c1 + d1 + solution2 + "\n" + "\\end{array}\\right.$$\n\n"
+	document.form1.field_tex.value = tex;
+}
+
+function equationsproblem(){
+	for (var i = 0; i < 5; i++){
+	equations();
+	}
+}
+// --> 
+</script> 
+
+</head>
+<body>
+
+<form action="#" name="form1">
+<input type="button" value="ランダムな連立方程式を作る" onclick="equationsproblem()">
+<br>
+
+<textarea name="field_xy" rows="30" cols="40">
+ここにTeX文書が表示されます。</textarea>
+
+<textarea name="field_tex" rows="30" cols="40">
+ここにTeX文書が表示されます。
+</textarea>
+
+</form>
+
+</body>
+</html>

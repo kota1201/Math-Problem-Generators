@@ -1,0 +1,128 @@
+<html>
+<head>
+<title>最大公約数問題作成</title>
+
+<style type="text/css">
+<!--
+
+-->
+</style>
+
+<script type="text/javascript">
+<!--
+function eucmod(syaro,rize){
+	if (syaro > rize){
+	var temp = syaro;
+	syaro = rize;
+	rize = temp;
+	}
+	return [rize % syaro,syaro];
+}
+	
+	
+
+function gcd(chino,cocoa){
+
+	chino = Math.abs(chino);
+	cocoa = Math.abs(cocoa);
+	var rabbithouse = [0,0];
+
+	if (chino > cocoa){
+	var temp = chino;
+	chino = cocoa;
+	cocoa = temp;
+	}
+
+	while (cocoa % chino >= 2){
+	console.log("x=" + chino + ",y=" + cocoa);
+	rabbithouse = eucmod(chino,cocoa);
+	chino = rabbithouse[0];
+	cocoa = rabbithouse[1];
+	console.log("条件" + cocoa % chino);
+	}
+
+	if (cocoa % chino == 1){
+	chino = 1;
+	}
+
+	return chino;
+
+}
+
+var tex = ""
+
+function randomcomposite(problemnumber){
+
+	// 設定開始
+
+	var prime1 = [2,3,5,7]
+	var prime2 = [11,13,17,19]
+	var prime3 = [23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97]
+	var cardinality = 4;
+	var min = 20;
+	var max = 100;
+	if (problemnumber == 3){
+	min = 100;
+	max = 1000;
+	}else if(problemnumber == 4){
+	min = 100;
+	max = 10000;
+	prime1 = prime3;
+	prime2 = prime3;
+	cardinality = 17;
+	}	
+
+	var number = Math.floor(Math.random()*5);
+	var largeprime = prime2[Math.floor(Math.random()*cardinality)];
+	var composite = largeprime
+	var primes = [largeprime,1,1,1,1];
+	var multiply = 1;
+
+	while (composite < min){
+		for (var i = 0; i <= number; i++){
+		multiply = prime1[Math.floor(Math.random()*cardinality)];
+			if (composite * multiply < max){
+			composite = composite * multiply;
+			primes[i+1] = multiply;
+			}
+		}
+	}
+	return composite;
+}
+
+function compositeproblem(){
+	for (var i = 0; i < 4; i++){
+	var compositeone = 1;
+	var compositetwo = 1;
+	while (gcd(compositeone,compositetwo) < 2){
+	compositeone = randomcomposite(i+1);
+	compositetwo = randomcomposite(i+1);
+	}
+	greatest = gcd(compositeone,compositetwo);
+	console.log(""+ compositeone + "と" + compositetwo);
+	tex = tex + "$$" + compositeone + "と" + compositetwo + "の最大公約数は" + gcd(compositeone,compositetwo) + "$$\n"
+	}
+	tex = tex + "\n";
+	document.form1.field_tex.value = tex;
+}
+
+// --> 
+</script> 
+
+</head>
+<body>
+
+
+<form action="#" name="form1">
+<input type="button" value="ランダムな連立方程式を作る" onclick="compositeproblem()">
+<br>
+
+<strong></strong>
+<textarea name="field_tex" rows="8" cols="60">
+ここにTeX文書が表示されます。
+</textarea>
+
+</form>
+
+</body>
+</html>
