@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>“ñŸ•û’ö®ƒ‰ƒ“ƒ_ƒ€ì¬</title>
+<title>äºŒæ¬¡æ–¹ç¨‹å¼ãƒ©ãƒ³ãƒ€ãƒ ä½œæˆ</title>
 
 <style type="text/css">
 <!--
@@ -10,6 +10,16 @@
 
 <script type="text/javascript">
 <!--
+function nonzerorandom(absolutemax){
+	//çµ¶å¯¾å€¤ã‚’æŒ‡å®šã—ã¦ã€ãã®ç¯„å›²å†…ã®ä¹±æ•°ã‚’ç”Ÿæˆã™ã‚‹ã€‚
+	//ãŸã ã—ã€0ã¯å«ã¾ãªã„
+	var randomnumber=Math.floor(Math.random()*absolutemax*2)+1;
+	if (randomnumber  > absolutemax){
+	randomnumber = randomnumber - absolutemax*2 -1;
+	}
+	return randomnumber;
+}
+
 function eucmod(syaro,rize){
 	if (syaro > rize){
 	var temp = syaro;
@@ -38,7 +48,7 @@ function gcd(chino,cocoa){
 	rabbithouse = eucmod(chino,cocoa);
 	chino = rabbithouse[0];
 	cocoa = rabbithouse[1];
-	console.log("ğŒ" + cocoa % chino);
+	console.log("æ¡ä»¶" + cocoa % chino);
 	}
 
 	if (cocoa % chino == 1){
@@ -46,62 +56,76 @@ function gcd(chino,cocoa){
 	}
 
 	return chino;
-
+
 }
+
+function addsign(coeff,variable,plus,equal){
+	// xã‚„yã®ä¿‚æ•°ã«ã‚ˆã£ã¦Â±ã‚„=ã‚’ä»˜ã‘ã‚‹
+	// plus=1ãªã‚‰-ã ã‘ã§ãªã+ã‚‚ä»˜ã‘ã‚‹ã€‚ ä¾‹:addsign(3,y,1,0) = "+3y"
+	// equal=1ãªã‚‰æœ€å¾Œã«=ã‚’ä»˜ã‘ã‚‹ã€‚ ä¾‹:addsign(3,y,1,1) = "+3y="
+	
+	if (coeff < -1){
+		variable = coeff + variable;
+	}else if (coeff == -1){
+		variable = "-" + variable;
+	}else if (coeff == 0){
+		variable = "";
+	}else if (coeff == 1){
+		if (plus == 1){
+		variable = "+" + variable;
+		}else{
+		variable = variable;
+		}
+	}else{
+		if (plus == 1){
+		variable = "+" + coeff + variable;
+		}else{
+		variable = coeff + variable;
+		}
+	}
+
+	if (equal == 1){
+		variable = variable + "="
+	}
+	return variable;
+}
+
+
+var solution = "";
+var problem = "";
+
 
 function quadratic(){
 
-	// İ’èŠJn
+	// è¨­å®šé–‹å§‹
 
-	var a=Math.floor(Math.random()*18)+1;
-	if (a>9){
-	var a=a-19;
-	}
-
-	var b=Math.floor(Math.random()*18)+1;
-	if (b>9){
-	var b=b-19;
-	}
+	var a = nonzerorandom(9);
+	var b = nonzerorandom(9);
 
 	if (a == b){
-	var solution = "$$x=" + a + "$$";
+	solution = solution + "$$x=" + a + "$$\n\n";
 	document.form1.field_solution.value = solution;
 	}else {
-	var solution = "$$x=" + a + ", " + b + "$$";
+	solution = solution + "$$x=" + a + ", " + b + "$$\n\n";
 	document.form1.field_solution.value = solution;
 	}
 
 	var coefficient = - a - b;
-	if (coefficient < -1){
-		var coefficient = coefficient + "x";
-	}
-	else if (coefficient == -1){
-		coefficient = "-x";
-	}
-	else if (coefficient == 0){
-		coefficient = "";
-	}
-	else if (coefficient == 1){
-		coefficient = "+x";
-	}
-	else{
-		coefficient = "+" + coefficient + "x";
-	}
-
+	coefficient = addsign(coefficient,"x",1,0)
+
 	var constant = a * b;
-	if (constant < 0){
-		var constant = constant;
-	}
-	else if (constant == 0){
-		constant = "";
-	}
-	else{
-		constant = "+" + constant;
-	}
+	coefficient = addsign(coefficient,"",1,0)
 
+	problem = problem + "$$x^2" + coefficient + constant + "=0$$\n\n";
+	document.form1.field_problem.value = problem;
+}
 
-	var problem = "$$x^2" + coefficient + constant + "=0$$"
-	document.form1.field_problem.value = problem;
+function quadraticproblems(){
+	solution = "";
+	problem = "";
+	for (var i = 0; i < document.form1.howmany.value; i++){
+	quadratic();
+	}
 }
 
 // --> 
@@ -110,18 +134,19 @@ function quadratic(){
 </head>
 <body>
 
-<form action="#" name="form1">
-<input type="button" value="ƒ‰ƒ“ƒ_ƒ€‚È“ñŸ•û’ö®‚ğì‚é" onclick="quadratic()">
+<form action="#" name="form1">
+ä½œæˆã™ã‚‹äºŒæ¬¡æ–¹ç¨‹å¼ã®æ•°ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚<br>
+<input type="number" name="howmany">
+<input type="button" value="ãƒ©ãƒ³ãƒ€ãƒ ãªäºŒæ¬¡æ–¹ç¨‹å¼ã‚’ä½œã‚‹" onclick="quadraticproblems()">
 <br>
 
-<textarea name="field_solution" rows="6" cols="40">
-‚±‚±‚ÉTeX•¶‘‚ª•\¦‚³‚ê‚Ü‚·B
+<textarea name="field_solution" rows="12" cols="40">
+ã“ã“ã«TeXæ–‡æ›¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚
 </textarea>
-<br><br>
 
 <strong></strong>
-<textarea name="field_problem" rows="6" cols="40">
-‚±‚±‚ÉTeX•¶‘‚ª•\¦‚³‚ê‚Ü‚·B
+<textarea name="field_problem" rows="12" cols="40">
+ã“ã“ã«TeXæ–‡æ›¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚
 </textarea>
 
 </form>
