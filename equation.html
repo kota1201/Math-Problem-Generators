@@ -10,98 +10,132 @@
 
 <script type="text/javascript">
 <!--
-var xy = ""
-var tex = ""
+
+function eucmod(syaro,rize){
+	if (syaro > rize){
+	var temp = syaro;
+	syaro = rize;
+	rize = temp;
+	}
+	return [rize % syaro,syaro];
+}
+
+
+function gcd(chino,cocoa){
+
+	chino = Math.abs(chino);
+	cocoa = Math.abs(cocoa);
+	var rabbithouse = [0,0];
+
+	if (chino > cocoa){
+	var temp = chino;
+	chino = cocoa;
+	cocoa = temp;
+	}
+
+	while (cocoa % chino >= 2){
+	rabbithouse = eucmod(chino,cocoa);
+	chino = rabbithouse[0];
+	cocoa = rabbithouse[1];
+	}
+
+	if (cocoa % chino == 1){
+	chino = 1;
+	}
+
+	return chino;
+
+}
+
+function addsign(coeff,variable,plus,equal){
+	// xやyの係数によって±や=を付ける
+	// plus=1なら-だけでなく+も付ける。 例:addsign(3,y,1,0) = "+3y"
+	// equal=1なら最後に=を付ける。 例:addsign(3,y,1,1) = "+3y="
+	
+	if (coeff < -1){
+		variable = coeff + variable;
+	}else if (coeff == -1){
+		variable = "-" + variable;
+	}else if (coeff == 0){
+		variable = "";
+	}else if (coeff == 1){
+		if (plus == 1){
+		variable = "+" + variable;
+		}else{
+		variable = variable;
+		}
+	}else{
+		if (plus == 1){
+		variable = "+" + coeff + variable;
+		}else{
+		variable = coeff + variable;
+		}
+	}
+
+	if (equal == 1){
+		variable = variable + "="
+	}
+	return variable;
+}
 
 function equations(){
 
 	// 設定開始
 
+	var a = document.form1.a.value;
+	var b = document.form1.b.value;
+	var c = document.form1.c.value;
+	var d = document.form1.d.value;
+	var x = document.form1.x.value;
+	var y = document.form1.y.value;
+
+	if ( document.form1.reduction.checked ){
+		if (gcd(a,b)>1){
+		var gcd1 = gcd(a,b);
+		a = a / gcd1;
+		b = b / gcd1;
+		}
+
+		if (gcd(c,d)>1){
+		var gcd2 = gcd(c,d);
+		c = c / gcd2;
+		d = d / gcd2;
+		}
+	}
+
+	if ( document.form1.positive.checked ){
+		if (a < 0){
+		a = a * -1;
+		b = b * -1;
+		}
+
+		if (c < 0){
+		c = c * -1;
+		d = d * -1;
+		}
+	}
+
 	// 商品1
-	var solution1 = document.form1.a.value * document.form1.x.value + document.form1.b.value * document.form1.y.value;
+	var solution1 = a * x + b * y;
 	document.form1.field1.value = solution1; // 小計を表示
 
 	// 商品2
-	var solution2 = document.form1.c.value * document.form1.x.value + document.form1.d.value * document.form1.y.value;
+	var solution2 = c * x + d * y;
 	document.form1.field2.value = solution2; // 小計を表示
 
-	if (document.form1.a.value < -1){
-		var a1 = document.form1.a.value + "x";
-	}
-	else if (document.form1.a.value == -1){
-		var a1 = "-x";
-	}
-	else if (document.form1.a.value == 0){
-		var a1 = "";
-	}
-	else if (document.form1.a.value == 1){
-		var a1 = "x";
-	}
-	else{
-		var a1 = document.form1.a.value + "x";
-	}
+	var ax = addsign(a,"x",0,0)
+	var by = addsign(b,"y",1,1)
+	var cx = addsign(c,"x",0,0)
+	var dy = addsign(d,"y",1,1)
 
-	if (document.form1.b.value < -1){
-		var b1 = document.form1.b.value + "y=";
-	}
-	else if (document.form1.b.value == -1){
-		var b1 = "-y=";
-	}
-	else if (document.form1.b.value == 0){
-		var b1 = "=";
-	}
-	else if (document.form1.b.value == 1){
-		var b1 = "+y=";
-	}
-	else{
-		var b1 = "+" + document.form1.b.value + "y=";
-	}
-
-	if (document.form1.c.value < -1){
-		var c1 = document.form1.c.value + "x";
-	}
-	else if (document.form1.c.value == -1){
-		var c1 = "-x";
-	}
-	else if (document.form1.c.value == 0){
-		var c1 = "";
-	}
-	else if (document.form1.c.value == 1){
-		var c1 = "x";
-	}
-	else{
-		var c1 = document.form1.c.value + "x";
-	}
-
-	if (document.form1.d.value < -1){
-		var d1 = document.form1.d.value + "y=";
-	}
-	else if (document.form1.d.value == -1){
-		var d1 = "-y=";
-	}
-	else if (document.form1.d.value == 0){
-		var d1 = "=";
-	}
-	else if (document.form1.d.value == 1){
-		var d1 = "+y=";
-	}
-	else{
-		var d1 = "+" + document.form1.d.value + "y=";
-	}
-
-	xy = xy + "$$\\left\\{\\begin{array}{l}" +  "\n" + "x=" + document.form1.x.value + "\\\\" + "\n" + "y=" + document.form1.y.value + "\n" + "\\end{array}\\right.$$\n"
+	var xy = "$$\\left\\{\\begin{array}{l}" +  "\n" + "x=" + x + "\\\\" + "\n" + "y=" + y + "\n" + "\\end{array}\\right.$$\n"
 	document.form1.field_xy.value = xy;
 
-	tex = tex + "$$\\left\\{\\begin{array}{l}" + "\n" + a1 + b1 + document.form1.field1.value + "\\\\" + "\n" + c1 + d1 + document.form1.field2.value + "\n" + "\\end{array}\\right.$$\n"
+	var tex = "$$\\left\\{\\begin{array}{l}" + "\n" + ax + by + solution1 + "\\\\" + "\n" + cx + dy + solution2 + "\n" + "\\end{array}\\right.$$\n"
 	document.form1.field_tex.value = tex;
 
 }
 
-function equationsproblem(){
-	for (var i = 0; i < 5; i++){
-	equations();
-	}
-}
 // --> 
 </script> 
 
@@ -110,28 +144,30 @@ function equationsproblem(){
 
 <form action="#" name="form1">
 
-x=<input type="number" name="x" onChange="equations()"><br>
-y=<input type="number" name="y" onChange="equations()">
+x=<input type="number" name="x" value="1" onChange="equations()"><br>
+y=<input type="number" name="y" value="-2" onChange="equations()">
 <br>
 
-<input type="number" name="a" onChange="equations()">x+
-<input type="number" name="b" onChange="equations()">y=
+<input type="number" name="a" value="3" onChange="equations()">x+
+<input type="number" name="b" value="-4" onChange="equations()">y=
 <input type="number" name="field1" size="8" value="0">
 <br>
 
-<input type="number" name="c" onChange="equations()">x+
-<input type="number" name="d" onChange="equations()">y=
+<input type="number" name="c" value="5" onChange="equations()">x+
+<input type="number" name="d" value="-6" onChange="equations()">y=
 <input type="number" name="field2" size="8" value="0">
 <br><br>
-
+<input type="checkbox" name="reduction" onChange="equations()">係数を互いに素にする<br>
+<input type="checkbox" name="positive" onChange="equations()">xの係数を正にする<br>
+<br><br>
 
 <strong></strong>
-<textarea name="field_xy" rows="6" cols="60">
+<textarea name="field_xy" rows="8" cols="60">
 ここにTeX文書が表示されます。
 </textarea>
 <br>
 
-<textarea name="field_tex" rows="6" cols="60">
+<textarea name="field_tex" rows="8" cols="60">
 ここにTeX文書が表示されます。
 </textarea>
 

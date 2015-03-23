@@ -28,8 +28,7 @@ function eucmod(syaro,rize){
 	}
 	return [rize % syaro,syaro];
 }
-	
-	
+
 
 function gcd(chino,cocoa){
 
@@ -100,9 +99,18 @@ function equations(){
 
 	xy = xy + "$$\\left\\{\\begin{array}{l}" + "\n" + "x=" + x + "\\\\" + "\n" + "y=" + y + "\n" + "\\end{array}\\right.$$\n\n"
 	document.form1.field_xy.value = xy;
+	
+	var a = 1;
+	var b = 1;
+	var c = 1;
+	var d = 1;
 
-	var a = nonzerorandom(9);
-	var b = nonzerorandom(9);
+	do{
+	a = nonzerorandom(9);
+	b = nonzerorandom(9);
+	c = nonzerorandom(9);
+	d = nonzerorandom(9);
+	}while (a * d == b * c);
 
 	if (gcd(a,b)>1){
 	var gcd1 = gcd(a,b);
@@ -110,15 +118,23 @@ function equations(){
 	b = b / gcd1;
 	}
 
-	var c = nonzerorandom(9);
-	var d = nonzerorandom(9);
-
 	if (gcd(c,d)>1){
 	var gcd2 = gcd(c,d);
 	c = c / gcd2;
 	d = d / gcd2;
 	}
 
+	if ( document.form1.positive.checked ){
+		if (a < 0){
+		a = a * -1;
+		b = b * -1;
+		}
+
+		if (c < 0){
+		c = c * -1;
+		d = d * -1;
+		}
+	}
 
 	var solution1 = a * x + b * y;
 
@@ -138,7 +154,7 @@ function equationsproblem(){
 	xy = "";
 	tex = "";
 	for (var i = 0; i < document.form1.howmany.value; i++){
-	equations();
+		equations();
 	}
 }
 
@@ -150,7 +166,9 @@ function equationsproblem(){
 
 <form action="#" name="form1">
 作成する連立方程式の数を指定してください。<br>
-<input type="number" name="howmany">
+<input type="number" name="howmany" value="4"><br>
+<input type="checkbox" name="positive">xの係数を正にする<br><br>
+
 <input type="button" value="ランダムな連立方程式を作る" onclick="equationsproblem()">
 <br><br>
 

@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>�ő���񐔖��쐬</title>
+<title>最大公約数問題作成</title>
 
 <style type="text/css">
 <!--
@@ -38,7 +38,7 @@ function gcd(chino,cocoa){
 	rabbithouse = eucmod(chino,cocoa);
 	chino = rabbithouse[0];
 	cocoa = rabbithouse[1];
-	console.log("����" + cocoa % chino);
+	console.log("条件" + cocoa % chino);
 	}
 
 	if (cocoa % chino == 1){
@@ -46,14 +46,14 @@ function gcd(chino,cocoa){
 	}
 
 	return chino;
-
+
 }
 
 var tex = ""
 
-function randomcomposite(problemnumber){
+function randomcomposite(problemdifficulity){
 
-	// �ݒ�J�n
+	// 設定開始
 
 	var prime1 = [2,3,5,7]
 	var prime2 = [11,13,17,19]
@@ -61,10 +61,10 @@ function randomcomposite(problemnumber){
 	var cardinality = 4;
 	var min = 20;
 	var max = 100;
-	if (problemnumber == 3){
+	if (problemdifficulity == 2){
 	min = 100;
 	max = 1000;
-	}else if(problemnumber == 4){
+	}else if(problemdifficulity == 3){
 	min = 100;
 	max = 10000;
 	prime1 = prime3;
@@ -87,21 +87,44 @@ function randomcomposite(problemnumber){
 			}
 		}
 	}
-	return composite;
+	return composite;
 }
 
 function compositeproblem(){
-	for (var i = 0; i < 4; i++){
-	var compositeone = 1;
-	var compositetwo = 1;
-	while (gcd(compositeone,compositetwo) < 2){
-	compositeone = randomcomposite(i+1);
-	compositetwo = randomcomposite(i+1);
+	tex = ""
+	for (var i = 0; i < document.form1.howmany1.value; i++){
+		var compositeone = 1;
+		var compositetwo = 1;
+		while (gcd(compositeone,compositetwo) < 2){
+		compositeone = randomcomposite(1);
+		compositetwo = randomcomposite(1);
+		greatest = gcd(compositeone,compositetwo);
+		}
+	tex = tex + "$$" + compositeone + "と" + compositetwo + "の最大公約数は" + gcd(compositeone,compositetwo) + "$$\n"
 	}
-	greatest = gcd(compositeone,compositetwo);
-	console.log(""+ compositeone + "��" + compositetwo);
-	tex = tex + "$$" + compositeone + "��" + compositetwo + "�̍ő���񐔂�" + gcd(compositeone,compositetwo) + "$$\n"
+	
+	for (var i = 0; i < document.form1.howmany2.value; i++){
+		var compositeone = 1;
+		var compositetwo = 1;
+		while (gcd(compositeone,compositetwo) < 2){
+		compositeone = randomcomposite(2);
+		compositetwo = randomcomposite(2);
+		greatest = gcd(compositeone,compositetwo);
+		}
+		tex = tex + "$$" + compositeone + "と" + compositetwo + "の最大公約数は" + gcd(compositeone,compositetwo) + "$$\n"
 	}
+
+	for (var i = 0; i < document.form1.howmany3.value; i++){
+		var compositeone = 1;
+		var compositetwo = 1;
+		while (gcd(compositeone,compositetwo) < 2){
+		compositeone = randomcomposite(3);
+		compositetwo = randomcomposite(3);
+		greatest = gcd(compositeone,compositetwo);
+		}
+		tex = tex + "$$" + compositeone + "と" + compositetwo + "の最大公約数は" + gcd(compositeone,compositetwo) + "$$\n"
+	}
+
 	tex = tex + "\n";
 	document.form1.field_tex.value = tex;
 }
@@ -113,13 +136,17 @@ function compositeproblem(){
 <body>
 
 
-<form action="#" name="form1">
-<input type="button" value="�����_���ȘA�������������" onclick="compositeproblem()">
-<br>
+<form action="#" name="form1">
+作成する最大公約数問題の数を指定してください。<br><br>
+<input type="number" name="howmany1" value=2>:2桁と2桁<br>
+<input type="number" name="howmany2" value=1>:3桁と3桁<br>
+<input type="number" name="howmany3" value=1>:ユークリッド互除法<br><br>
+<input type="button" value="最大公約数問題を作る" onclick="compositeproblem()">
+<br><br>
 
 <strong></strong>
-<textarea name="field_tex" rows="8" cols="60">
-������TeX�������\������܂��B
+<textarea name="field_tex" rows="10" cols="60">
+ここにTeX文書が表示されます。
 </textarea>
 
 </form>
