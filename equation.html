@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>˜A—§•û’öŽ®ì¬</title>
+<title>é€£ç«‹æ–¹ç¨‹å¼ä½œæˆ</title>
 
 <style type="text/css">
 <!--
@@ -15,15 +15,15 @@ var tex = ""
 
 function equations(){
 
-	// Ý’èŠJŽn
+	// è¨­å®šé–‹å§‹
 
-	// ¤•i1
+	// å•†å“1
 	var solution1 = document.form1.a.value * document.form1.x.value + document.form1.b.value * document.form1.y.value;
-	document.form1.field1.value = solution1; // ¬Œv‚ð•\Ž¦
+	document.form1.field1.value = solution1; // å°è¨ˆã‚’è¡¨ç¤º
 
-	// ¤•i2
+	// å•†å“2
 	var solution2 = document.form1.c.value * document.form1.x.value + document.form1.d.value * document.form1.y.value;
-	document.form1.field2.value = solution2; // ¬Œv‚ð•\Ž¦
+	document.form1.field2.value = solution2; // å°è¨ˆã‚’è¡¨ç¤º
 
 	if (document.form1.a.value < -1){
 		var a1 = document.form1.a.value + "x";
@@ -110,29 +110,29 @@ function equationsproblem(){
 
 <form action="#" name="form1">
 
-x=<input type="number" name="x" onChange="keisan()"><br>
-y=<input type="number" name="y" onChange="keisan()">
+x=<input type="number" name="x" onChange="equations()"><br>
+y=<input type="number" name="y" onChange="equations()">
 <br>
 
-<input type="number" name="a" onChange="keisan()">x+
-<input type="number" name="b" onChange="keisan()">y=
+<input type="number" name="a" onChange="equations()">x+
+<input type="number" name="b" onChange="equations()">y=
 <input type="number" name="field1" size="8" value="0">
 <br>
 
-<input type="number" name="c" onChange="keisan()">x+
-<input type="number" name="d" onChange="keisan()">y=
+<input type="number" name="c" onChange="equations()">x+
+<input type="number" name="d" onChange="equations()">y=
 <input type="number" name="field2" size="8" value="0">
 <br><br>
 
 
 <strong></strong>
 <textarea name="field_xy" rows="6" cols="60">
-‚±‚±‚ÉTeX•¶‘‚ª•\Ž¦‚³‚ê‚Ü‚·B
+ã“ã“ã«TeXæ–‡æ›¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚
 </textarea>
 <br>
 
 <textarea name="field_tex" rows="6" cols="60">
-‚±‚±‚ÉTeX•¶‘‚ª•\Ž¦‚³‚ê‚Ü‚·B
+ã“ã“ã«TeXæ–‡æ›¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚
 </textarea>
 
 </form>
